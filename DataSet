@@ -18,8 +18,10 @@ public ArrayList<Integer> data = new ArrayList<Integer>();
 
    private ArrayList<Integer> makeArr(Scanner input) {
       while (input.hasNext()) {
-         data.add(input.nextInt());
+         data.add(input.nextLine());
       }
+      inputLength = data.length();
+      return data;
    }
    
    private double calcMean(ArrayList<Integer> data) {
@@ -27,8 +29,27 @@ public ArrayList<Integer> data = new ArrayList<Integer>();
       for (int i = 0; i < data.length(); i++) {
          total += data[i];
       }
+      return (total / data.length());
    }
-
+   
+   public int findMax() {
+   int max = data[0];
+      for (int i = 1; i < inputLength; i++) {
+         if (max < data[i]) 
+            max = data[i];
+      }
+      
+         return max;
+      }
+      
+      public ArrayList<Integer> makeHistogram() {
+         int spacing;
+         int range = max + (spacing - (max % spacing));  
+         for (int i = 0; i < (range / spacing); i++) {
+              ArrayList<Integer>
+         }
+      }
+   }
 
 
 }
