@@ -1,5 +1,6 @@
-import java.io*;
+import java.io.*;
 import java.awt.*;
+import java.util.*;
 
 public class DataSet {
 
@@ -9,7 +10,7 @@ private int inputLength;
 public double t;
 public ArrayList<Integer> data = new ArrayList<Integer>();
 
-   public static void main(String[] args) 
+   public  void takeUserInput() { 
       throws FileNotFoundException {
       File txtFile = new File("students.txt");
       Scanner input = new Scanner(txtFile);
@@ -18,7 +19,7 @@ public ArrayList<Integer> data = new ArrayList<Integer>();
 
    private ArrayList<Integer> makeArr(Scanner input) {
       while (input.hasNext()) {
-         data.add(input.nextLine());
+         data.add(input.nextInt());
       }
       inputLength = data.length();
       return data;
@@ -38,19 +39,18 @@ public ArrayList<Integer> data = new ArrayList<Integer>();
          if (max < data[i]) 
             max = data[i];
       }
+      return max;
+   }
       
-         return max;
-      }
-      
-      public ArrayList<Integer> makeHistogram() {
-         int spacing;
-         ArrayList<Integer> = new ArrayList<Integer>; 
-         int range = max + (spacing - (max % spacing));  
-         for (int i = 0; i < (range / spacing); i++) {
-              
-         }
+   public ArrayList<Integer> makeHistogram() {
+      int spacing;
+      ArrayList<Integer> xVals = new ArrayList<Integer>(); 
+      int range = max + (spacing - (max % spacing));  
+      for (int i = 0; i < (range / spacing); i++) {
+           xVals.add((i * spacing) + (spacing / 2));
       }
    }
-
-
 }
+
+
+
