@@ -10,47 +10,58 @@ private int inputLength;
 public double t;
 public ArrayList<Integer> data = new ArrayList<Integer>();
 
-   public  void takeUserInput() { 
-      throws FileNotFoundException {
-      File txtFile = new File("students.txt");
-      Scanner input = new Scanner(txtFile);
-      data = makeArr(input);
+   public DataSet() throws FileNotFoundException {
+   File file = new File("students.txt");
+   takeFileInput(file);
+   }
+
+   public  void takeFileInput(File file) {  
+    
+    if ( !(file.toString().equals(null))) {
+       Scanner input = new Scanner(file);
+       data = makeArr(input);
+    } else  {
+      
+    System.out.println("No File Found");
+    }
+    
    }
 
    private ArrayList<Integer> makeArr(Scanner input) {
       while (input.hasNext()) {
          data.add(input.nextInt());
       }
-      inputLength = data.length();
+      inputLength = data.size();
       return data;
    }
    
    private double calcMean(ArrayList<Integer> data) {
       int total = 0;
-      for (int i = 0; i < data.length(); i++) {
-         total += data[i];
+      for (int i = 0; i < data.size(); i++) {
+         total += data.get(i);
       }
-      return (total / data.length());
+      return (total / data.size());
    }
    
    public int findMax() {
-   int max = data[0];
+   int max = data.get(0);
       for (int i = 1; i < inputLength; i++) {
-         if (max < data[i]) 
-            max = data[i];
+         if (max < data.get(i)) 
+            max = data.get(i);
       }
       return max;
    }
       
    public ArrayList<Integer> makeHistogram() {
-      int spacing;
+      int spacing = 10;
+      int max = findMax();
       ArrayList<Integer> xVals = new ArrayList<Integer>(); 
       int range = max + (spacing - (max % spacing));  
       for (int i = 0; i < (range / spacing); i++) {
            xVals.add((i * spacing) + (spacing / 2));
       }
+      return xVals;
    }
 }
-
 
 
