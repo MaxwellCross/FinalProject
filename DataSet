@@ -2,28 +2,33 @@ import java.io.*;
 import java.awt.*;
 import java.util.*;
 
+
 public class DataSet {
 
-private double mean;
-private double standardDev;
-private int inputLength;
-public double t;
-public ArrayList<Integer> data = new ArrayList<Integer>();
+   private double mean;
+   private double standardDev;
+   private int inputLength;
+   public double t;
+   public ArrayList<Integer> data = new ArrayList<Integer>();
+   public int bucketSize;
 
    public DataSet() throws FileNotFoundException {
-   File file = new File("students.txt");
-   takeFileInput(file);
+      File file = new File("students.txt");
+      takeFileInput(file);
+      System.out.println("Please Enter Desired Bucket Size:");
+      Scanner userInput = new Scanner(System.in);
+      bucketSize = userInput.nextInt();
    }
 
-   public  void takeFileInput(File file) {  
+   public  void takeFileInput(File file) throws FileNotFoundException {  
     
-    if ( !(file.toString().equals(null))) {
-       Scanner input = new Scanner(file);
-       data = makeArr(input);
-    } else  {
+      if ( !(file.toString().equals(null))) {
+         Scanner input = new Scanner(file);
+         data = makeArr(input);
+      } else  {
       
-    System.out.println("No File Found");
-    }
+         System.out.println("No File Found");
+      }
     
    }
 
@@ -35,16 +40,34 @@ public ArrayList<Integer> data = new ArrayList<Integer>();
       return data;
    }
    
-   private double calcMean(ArrayList<Integer> data) {
+   private double calcMean() {
       int total = 0;
-      for (int i = 0; i < data.size(); i++) {
-         total += data.get(i);
+      for (int i = 0; i < this.data.size(); i++) {
+         total += this.data.get(i);
       }
-      return (total / data.size());
+      return (total / this.data.size());
    }
    
+   public double calcStanDev() { 
+      int x = 0;
+      for (int i = 0; i < this.data.size(); i++) {
+         x += (Math.pow ((i - 80), 2));
+      }
+      double stanDev = (Math.pow ((x / this.data.size()), 0.5));
+      return stanDev;
+   }
+   
+   public double calcT() {
+      double mean = calcMean();
+      double stanDev = calcStanDev();
+      double t = ((mean - 80) * Math.pow (this.data.size(), 0.5)) / stanDev ;
+      return t;
+   }
+
+
+   
    public int findMax() {
-   int max = data.get(0);
+      int max = data.get(0);
       for (int i = 1; i < inputLength; i++) {
          if (max < data.get(i)) 
             max = data.get(i);
@@ -52,16 +75,35 @@ public ArrayList<Integer> data = new ArrayList<Integer>();
       return max;
    }
       
-   public ArrayList<Integer> makeHistogram() {
-      int spacing = 10;
+   public ArrayList<Integer> makeHistogramX() {
+      // make scope larger
       int max = findMax();
       ArrayList<Integer> xVals = new ArrayList<Integer>(); 
-      int range = max + (spacing - (max % spacing));  
-      for (int i = 0; i < (range / spacing); i++) {
-           xVals.add((i * spacing) + (spacing / 2));
+      int range = max + (this.bucketSize - (max % this.bucketSize));  
+      for (int i = 0; i < (range / this.bucketSize); i++) {
+         xVals.add((i * this.bucketSize) + (this.bucketSize / 2));
       }
       return xVals;
    }
+   
+   public ArrayList<Integer> makeHistogramY(ArrayList<Integer> xVals){
+      ArrayList<Integer> yVals = new ArrayList<Integer>();
+      for (int i = 0; i < xVals.size(); i++) {
+         yVals.add(0);
+      }
+      for (int n = 0; n < this.data.size(); n++) {
+         for (int i = 1; i < xVals.size(); i++) {
+            //System.out.println(this.data.get(n));
+            if (this.data.get(n) < xVals.get(i)) {
+               yVals.set(i, yVals.get(i) +1);
+               // bucketed this item of data so move on to next 
+               break;   
+            }
+         }  
+            
+      }
+      return yVals;
+   }
+   
+   
 }
-
-
