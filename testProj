@@ -1,0 +1,22 @@
+import java.io.*;
+import java.util.*;
+import java.awt.*;
+
+
+
+public class testProj {
+
+   public static void main(String []args) throws FileNotFoundException {
+      //System.out.println("Output: ");
+      DataSet dataSet = new DataSet();
+    //  System.out.println(dataSet.makeHistogramX());
+      //System.out.println(dataSet.findMax());
+     // System.out.println(dataSet.makeHistogramY(dataSet.makeHistogramX()));
+     Histogram ourHistogram = new Histogram(dataSet);
+     ourHistogram.drawHist();
+     
+        
+   
+   }
+
+}
