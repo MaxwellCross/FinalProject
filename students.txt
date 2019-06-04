@@ -1,17 +1,1 @@
-import java.util.*;
-
-public class UI {
-
-   public UI()   
-      throws FileNotFoundException {
-         File txtFile = new File("students.txt");
-         Scanner input = new Scanner(txtFile);
-         data = makeArr(input);
-   }
-
-   }
-
-
-
-}
-
+54 63 55 128 106 101 103 144 59 123 95 99 45 112 136 85 89 92 97 103 112 79 67 96 88 104 92 90 82 57 65 114 83 91 84 99 79 107 90 74 81 109 117 85 73 96 102 93
