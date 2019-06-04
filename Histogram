@@ -1,0 +1,38 @@
+import java.awt.*;
+import java.io.*;
+import java.util.*;
+
+public class Histogram {
+
+   private int bucketSize;
+   private ArrayList<Integer> frequency = new ArrayList<Integer>();
+   private ArrayList<Integer> xValues = new ArrayList<Integer>();
+   private DataSet dataSet;
+   public Graphics g;
+   
+   public Histogram (DataSet inputSet) throws FileNotFoundException {
+      DrawingPanel panel = new DrawingPanel(2000,1000);
+      g = panel.getGraphics();
+      this.dataSet = inputSet;
+      xValues = this.dataSet.makeHistogramX();
+      frequency = this.dataSet.makeHistogramY(xValues);
+      
+   }
+   public void drawHist() {
+     double scale = Math.pow(10, 3);
+     this.dataSet.calcStanDev();
+     //System.out.println(this.dataSet);
+     String sD = "" + ( Math.round(this.dataSet.calcStanDev() * scale) / scale  );
+     String t = "" + ( Math.round(this.dataSet.calcT() * scale) / scale  );
+     g.drawString("Standard Deviation: " + sD, 50, 50);
+     g.drawString("T-Score: " + t, 100, 100);
+      for (int i = 0; i < xValues.size(); i++){
+         double num = (Math.random());
+         //Color myColor = new Color( (int)(num * (255)) , (int)(num * (255 - (i * 5))), (int)(num * (255 - (i * 10))));
+         Color myColor = new Color( (int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
+         this.g.setColor(myColor);
+         this.g.fillRect(xValues.get(i) * 10, 1000 - (frequency.get(i) * 50), 
+            (1000/ xValues.size()) , (frequency.get(i)) * 50);
+      } 
+   }
+}
